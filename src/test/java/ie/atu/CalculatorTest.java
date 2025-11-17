@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CalculatorTest {
     Calculator calc;
@@ -38,5 +39,28 @@ public class CalculatorTest {
     {
         assertEquals(5, calc.div(10,2));
     }
+    @Test
+    public void testAdd_fail(){
+       Exception ex = assertThrows(ArithmeticException.class, ()-> calc.add(Integer.MAX_VALUE,1));
+       assertEquals("Value out of range",ex.getMessage());
+    }
 
+    @Test
+    public void testSub_fail(){
+        Exception ex = assertThrows(ArithmeticException.class, ()-> calc.sub(Integer.MIN_VALUE,1));
+        assertEquals("Value out of range",ex.getMessage());
+    }
+
+    @Test
+    public void testMul_fail(){
+        Exception ex = assertThrows(ArithmeticException.class, ()-> calc.mul(Integer.MAX_VALUE,2));
+        assertEquals("Value out of range",ex.getMessage());
+
+    }
+
+    @Test
+    public void testDiv_fail(){
+        Exception ex = assertThrows(ArithmeticException.class, ()-> calc.div(1,0));
+        assertEquals("/ by zero",ex.getMessage());
+    }
 }
